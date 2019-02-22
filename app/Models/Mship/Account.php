@@ -196,9 +196,9 @@ class Account extends Model implements AuthenticatableContract, AuthorizableCont
         'password_expires_at',
     ];
     protected $attributes = [
-        'name_first' => '',
-        'name_last' => '',
-        'inactive' => false,
+        'name_first'    => '',
+        'name_last'     => '',
+        'inactive'      => false,
         'last_login_ip' => '0.0.0.0',
     ];
     protected $untracked = ['cert_checked_at', 'last_login', 'remember_token', 'password', 'updated_at'];
@@ -252,7 +252,7 @@ class Account extends Model implements AuthenticatableContract, AuthorizableCont
         }
 
         try {
-            return self::findOrFail((int) $accountId);
+            return self::findOrFail((int)$accountId);
         } catch (ModelNotFoundException $e) {
             dispatch((new UpdateMember($accountId))->onConnection('sync'));
 
@@ -346,7 +346,7 @@ class Account extends Model implements AuthenticatableContract, AuthorizableCont
 
     public function setIsInactiveAttribute($value)
     {
-        $this->inactive = (bool) $value;
+        $this->inactive = (bool)$value;
     }
 
     public function getStatusStringAttribute()
@@ -390,7 +390,7 @@ class Account extends Model implements AuthenticatableContract, AuthorizableCont
      */
     public function getRealNameAttribute()
     {
-        return $this->name_first.' '.$this->name_last;
+        return $this->name_first . ' ' . $this->name_last;
     }
 
     /**
@@ -403,7 +403,7 @@ class Account extends Model implements AuthenticatableContract, AuthorizableCont
     public function getNameAttribute()
     {
         if ($this->nickname != null) {
-            return $this->nickname.' '.$this->name_last;
+            return $this->nickname . ' ' . $this->name_last;
         }
 
         return $this->real_name;
@@ -438,8 +438,8 @@ class Account extends Model implements AuthenticatableContract, AuthorizableCont
         $allowedNames->push($this->real_name);
 
         if ($this->networkDataAtcCurrent) {
-            $allowedNames->push($this->name.' - '.$this->networkDataAtcCurrent->callsign);
-            $allowedNames->push($this->real_name.' - '.$this->networkDataAtcCurrent->callsign);
+            $allowedNames->push($this->name . ' - ' . $this->networkDataAtcCurrent->callsign);
+            $allowedNames->push($this->real_name . ' - ' . $this->networkDataAtcCurrent->callsign);
         }
 
         return $allowedNames->filter(function ($item, $key) use ($displayName) {
@@ -466,9 +466,9 @@ class Account extends Model implements AuthenticatableContract, AuthorizableCont
     public function getSessionTimeoutAttribute()
     {
         $timeout = $this->roles()
-                        ->orderBy('session_timeout', 'DESC')
-                        ->first()
-                        ->session_timeout;
+            ->orderBy('session_timeout', 'DESC')
+            ->first()
+            ->session_timeout;
 
         return $timeout === null ? 0 : $timeout;
     }
