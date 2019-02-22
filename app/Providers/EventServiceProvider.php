@@ -34,6 +34,7 @@ class EventServiceProvider extends ServiceProvider
 
         AtcSessionEnded::class => [
             //AtcSessionRecordedSuccessNotification::class, // temporarily disabled
+            \App\Listeners\Community\Points\IssueAtcSessionPoints::class,
         ],
 
         \App\Events\VisitTransfer\ApplicationSubmitted::class => [
